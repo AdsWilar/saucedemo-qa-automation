@@ -80,4 +80,5 @@ public abstract class BasePage {
                 .map(WebElement::getText)
                 .toList();
     }
+
 }
