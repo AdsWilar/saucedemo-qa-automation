@@ -2,6 +2,7 @@ package com.saucedemo.pages;
 
 import com.saucedemo.config.ConfigReader;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -55,4 +56,17 @@ public abstract class BasePage {
     protected boolean isEnabled(By locator) {
         return waitForClickability(locator).isEnabled();
     }
+
+    protected int getElementCount(By locator) {
+        return driver.findElements(locator).size();
+    }
+
+    protected boolean isVisible(By locator) {
+        try {
+            return wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).isDisplayed();
+        } catch (TimeoutException exception) {
+            return false;
+        }
+    }
+
 }
