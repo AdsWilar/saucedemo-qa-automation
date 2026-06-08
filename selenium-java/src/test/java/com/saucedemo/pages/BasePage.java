@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public abstract class BasePage {
 
@@ -25,6 +26,10 @@ public abstract class BasePage {
 
     protected WebElement find(By locator) {
         return driver.findElement(locator);
+    }
+
+    protected List<WebElement> findAll(By locator) {
+        return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
     }
 
     protected WebElement waitForVisibility(By locator) {
@@ -57,16 +62,23 @@ public abstract class BasePage {
         return waitForClickability(locator).isEnabled();
     }
 
-    protected int getElementCount(By locator) {
-        return driver.findElements(locator).size();
-    }
-
     protected boolean isVisible(By locator) {
         try {
             return wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).isDisplayed();
         } catch (TimeoutException exception) {
             return false;
         }
+    }
+
+    protected int getElementCount(By locator) {
+        return findAll(locator).size();
+    }
+
+    protected List<String> getTexts(By locator) {
+        return findAll(locator)
+                .stream()
+                .map(WebElement::getText)
+                .toList();
     }
 
 }
