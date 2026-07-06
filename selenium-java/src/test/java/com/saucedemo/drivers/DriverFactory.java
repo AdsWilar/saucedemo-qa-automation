@@ -11,6 +11,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class DriverFactory {
 
@@ -27,6 +29,13 @@ public final class DriverFactory {
             case "chrome" -> {
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions options = new ChromeOptions();
+                Map<String, Object> prefs = new HashMap<>();
+                prefs.put("credentials_enable_service", false);
+                prefs.put("profile.password_manager_enabled", false);
+                prefs.put("profile.password_manager_leak_detection", false);
+                options.setExperimentalOption("prefs", prefs);
+                options.addArguments("--disable-save-password-bubble");
+                options.addArguments("--disable-features=PasswordLeakDetection");
                 if (headless) {
                     options.addArguments("--headless=new");
                     options.addArguments("--window-size=1920,1080");
@@ -52,7 +61,7 @@ public final class DriverFactory {
                 }
                 driver = new EdgeDriver(options);
             }
-            
+
             default -> throw new IllegalArgumentException("Unsupported browser: " + browser);
         }
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(ConfigReader.getTimeout()));
