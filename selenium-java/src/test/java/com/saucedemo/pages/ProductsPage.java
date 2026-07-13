@@ -15,6 +15,7 @@ public class ProductsPage extends BasePage {
     private final By productDescriptions = By.className("inventory_item_desc");
     private final By productPrices = By.className("inventory_item_price");
     private final By shoppingCartLink = By.className("shopping_cart_link");
+
     private final By shoppingCartBadge = By.className("shopping_cart_badge");
     private final By sortDropdown = By.className("product_sort_container");
 
@@ -85,5 +86,10 @@ public class ProductsPage extends BasePage {
 
     public String getCartBadgeText() {
         return getText(shoppingCartBadge);
+    }
+
+    public CartPage goToCart() {
+        click(shoppingCartLink);
+        return new CartPage(driver);
     }
 }

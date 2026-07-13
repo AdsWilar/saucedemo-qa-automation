@@ -71,7 +71,7 @@ public abstract class BasePage {
     }
 
     protected int getElementCount(By locator) {
-        return findAll(locator).size();
+        return driver.findElements(locator).size();
     }
 
     protected List<String> getTexts(By locator) {
@@ -80,4 +80,5 @@ public abstract class BasePage {
                 .map(WebElement::getText)
                 .toList();
     }
+
 }
