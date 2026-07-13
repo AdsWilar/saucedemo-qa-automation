@@ -3,6 +3,8 @@ package com.saucedemo.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import com.saucedemo.pages.CheckoutStepOnePage;
+
 public class CartPage extends BasePage {
 
     private final By cartTitle = By.cssSelector("[data-test='title']");
@@ -50,5 +52,10 @@ public class CartPage extends BasePage {
 
     public boolean isBackpackDisplayed() {
         return isVisible(itemName);
+    }
+
+    public CheckoutStepOnePage checkout() {
+        click(checkoutButton);
+        return new CheckoutStepOnePage(driver);
     }
 }
