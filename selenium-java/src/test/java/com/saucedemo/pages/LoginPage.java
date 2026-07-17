@@ -50,4 +50,5 @@ public class LoginPage extends BasePage {
     public boolean isErrorMessageDisplayed() {
         return isDisplayed(errorMessage);
     }
-}
+
+   }
